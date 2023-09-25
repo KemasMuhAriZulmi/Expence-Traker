@@ -17,6 +17,171 @@
 
 
     // Always Stay Happy Makasih Ya😊😉
-  </script>
+/*
+  Tipe Data : Obejct(di buat dalam json);
+
+  Fitur / function yang ada :
+  - ShowData(Pengeluaran Dan Pemasukan Sisa uang terakhir(newest));
+  - ShowDataSortDate(Menampilkan data selisih berdasarkan tanggal);
+  - updateData(data berdasarkan id);
+  - deleteData(hapus data berdasrkan id);
+  Coba : 
+  - Loan
+  - Pasar Saham
+
+  Cara penampil :
+  - di buatkan button (kalau bisa terus di kasih id button);
+  - tampilnya di innerHTML(kalau nggak bisa buat alret aja);
+  - Tambah data pake prompt('');
+
+  isi tiap function : 
+  * showData (id,awalUang,keluarUang,sisaUang){
+  } // Chandra
+
+  * showDataSortData(id,uangAwal,uangaAkhir,tanggal){
+  }//chandra
+  */
+
+
+  const transactions = [
+  { "id": "1", "type": "income", "nominal": 500, "note": "Pendapatan bulanan", "date": "2023-09-01" },
+  { "id": "2", "type": "expense", "nominal": 200, "note": "Makan siang", "date": "2023-09-05" },
+  { "id": "3", "type": "income", "nominal": 300, "note": "Bonus", "date": "2023-09-10" },
+  { "id": "4", "type": "expense", "nominal": 100, "note": "Transportasi", "date": "2023-09-15" }
+];
+
+function addTransaction() {
+  const id = prompt('Masukkan ID transaksi:');
+  const type = prompt('Masukkan tipe transaksi (income/expense):');
+  const nominal = parseFloat(prompt('Masukkan nominal transaksi:'));
+  const note = prompt('Masukkan catatan transaksi:');
+  const date = prompt('Masukkan tanggal transaksi (format: yyyy-mm-dd):');
+
+  const transaction = { id, type, nominal, note, date };
+  transactions.push(transaction);
+  alert('Transaksi berhasil ditambahkan.');
+}
+
+function displayTransactions() {
+  let transactionInfo = 'Daftar Transaksi:\n';
+  transactions.forEach(transaction => {
+    transactionInfo += `ID: ${transaction.id}, Type: ${transaction.type}, Nominal: ${transaction.nominal}, Note: ${transaction.note}, Date: ${transaction.date}\n`;
+  });
+  alert(transactionInfo);
+}
+
+function calculateTotalBalance() {
+  let totalIncome = 0;
+  let totalExpense = 0;
+
+  transactions.forEach(transaction => {
+    if (transaction.type === 'income') {
+      totalIncome += transaction.nominal;
+    } else if (transaction.type === 'expense') {
+      totalExpense += transaction.nominal;
+    }
+  });
+
+  const totalBalance = totalIncome - totalExpense;
+  alert(`Total Pendapatan: ${totalIncome}\nTotal Pengeluaran: ${totalExpense}\nSisa Uang: ${totalBalance}`);
+}
+
+function displayTransactionsByDate() {
+  const startDate = prompt('Masukkan tanggal mulai (format: yyyy-mm-dd):');
+  const endDate = prompt('Masukkan tanggal akhir (format: yyyy-mm-dd):');
+  
+  let filteredTransactions = '';
+  transactions.forEach(transaction => {
+    if (transaction.date >= startDate && transaction.date <= endDate) {
+      filteredTransactions += `ID: ${transaction.id}, Type: ${transaction.type}, Nominal: ${transaction.nominal}, Note: ${transaction.note}, Date: ${transaction.date}\n`;
+    }
+  });
+
+  if (filteredTransactions) {
+    alert(`Transaksi antara ${startDate} dan ${endDate}:\n${filteredTransactions}`);
+  } else {
+    alert('Tidak ada transaksi pada rentang tanggal yang dimasukkan.');
+  }
+}
+
+function updateTransaction() {
+  const id = prompt('Masukkan ID transaksi yang akan diperbarui:');
+  const updatedNominal = parseFloat(prompt('Masukkan nominal baru (biarkan kosong jika tidak ingin mengubah):'));
+  const updatedNote = prompt('Masukkan catatan baru (biarkan kosong jika tidak ingin mengubah):');
+  const updatedDate = prompt('Masukkan tanggal baru (format: yyyy-mm-dd, biarkan kosong jika tidak ingin mengubah):');
+
+  const transactionIndex = transactions.findIndex(transaction => transaction.id === id);
+  if (transactionIndex !== -1) {
+    if (updatedNominal) {
+      transactions[transactionIndex].nominal = updatedNominal;
+    }
+    if (updatedNote) {
+      transactions[transactionIndex].note = updatedNote;
+    }
+    if (updatedDate) {
+      transactions[transactionIndex].date = updatedDate;
+    }
+    alert('Transaksi berhasil diperbarui.');
+  } else {
+    alert('Transaksi tidak ditemukan.');
+  }
+}
+
+function deleteTransaction() {
+  const id = prompt('Masukkan ID transaksi yang akan dihapus:');
+  const transactionIndex = transactions.findIndex(transaction => transaction.id === id);
+  if (transactionIndex !== -1) {
+    transactions.splice(transactionIndex, 1);
+    alert('Transaksi berhasil dihapus.');
+  } else {
+    alert('Transaksi tidak ditemukan.');
+  }
+}
+
+function main() {
+  let userChoice;
+
+  while (userChoice !== 'exit') {
+    userChoice = prompt(`Pilih fitur yang ingin Anda lakukan:\n
+      1. Tambah Transaksi
+      2. Tampilkan Daftar Transaksi
+      3. Hitung Total Saldo
+      4. Tampilkan Transaksi Berdasarkan Tanggal
+      5. Perbarui Transaksi
+      6. Hapus Transaksi
+      Ketik 'exit' untuk keluar.`);
+
+    switch (userChoice) {
+      case '1':
+        addTransaction();
+        break;
+      case '2':
+        displayTransactions();
+        break;
+      case '3':
+        calculateTotalBalance();
+        break;
+      case '4':
+        displayTransactionsByDate();
+        break;
+      case '5':
+        updateTransaction();
+        break;
+      case '6':
+        deleteTransaction();
+        break;
+      case 'exit':
+        alert('Program selesai.');
+        break;
+      default:
+        alert('Pilihan tidak valid. Silakan coba lagi.');
+        break;
+    }
+  }
+}
+
+main();
+
+gi</script>
 </body>
 </html>
